@@ -1,0 +1,36 @@
+---
+ - hosts: all
+   #ignore_errors: yes
+   become: yes
+   tasks:
+
+    - name: install httpd
+      yum:
+       name: httpd
+       state: present
+      when: ansible_distribution == "CentOS"
+   # - name: Ensure appache is at the latest version
+    #  yum:
+     #  name: httpd
+      # state: latest
+    - name: Ensure appache is running
+      service:
+       name: httpd
+       state: started
+      when: ansible_distribution == "CentOS"
+
+    - name: Install apache2
+      apt:
+       name: apache2
+       state: present
+      when: ansible_distribution == "Ubuntu"
+
+  #  - name: Ensure appache is at the latest version
+   #   apt:
+    #   name: apache2
+     #  state: latest
+    - name: ensure apache2 is running
+      service: 
+       name: apache2
+       state: started
+      when: ansible_distribution == "Ubuntu"
